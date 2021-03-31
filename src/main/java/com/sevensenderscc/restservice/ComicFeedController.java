@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -35,6 +36,13 @@ import org.springframework.web.client.RestTemplate;
 public class ComicFeedController {
 
     public static final Logger logger = LoggerFactory.getLogger(RestServiceApplication.class);
+
+    @GetMapping("/")
+    public @ResponseBody
+    String greeting() {
+        return "Welcome To Comic Feed REST API";
+    }
+
 
     @GetMapping("/get20RecentEntries")
     public ResponseEntity<List<FeedObject>> getRecent20EntriesFromFeed() throws IOException {
