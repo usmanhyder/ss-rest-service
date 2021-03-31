@@ -3,11 +3,11 @@ package com.sevensenderscc.restservice;
 import java.util.Date;
 
 public class FeedObject implements Comparable<FeedObject> {
-    String title;
-    String pictureURL;
-    String webURL;
-    Date publishingDate;
-    String publishingDateString;
+    private String title;
+    private String pictureURL;
+    private String webURL;
+    private Date publishingDate;
+    private String publishingDateString;
 
     public FeedObject() {
     }
