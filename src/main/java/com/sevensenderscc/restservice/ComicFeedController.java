@@ -43,16 +43,16 @@ public class ComicFeedController {
         return "Welcome To Comic Feed REST API";
     }
 
-
     @GetMapping("/get20RecentEntries")
     public ResponseEntity<List<FeedObject>> getRecent20EntriesFromFeed() throws IOException {
 
-        List<FeedObject> feedObjectList = getEntriesFromPDLFeed();
-        feedObjectList = getEntriesFromWebComicAPI(feedObjectList);
+        List<FeedObject> feedObjectList = getEntriesFromPDLFeed();              //Get 10 latest Entries from PDL RSS Feed
+        feedObjectList = getEntriesFromWebComicAPI(feedObjectList);             //Get 10 Latest entries from WebComic API and add to the entriesList
 
         // Sort the resulting feed by publishing date from recent to older
         Collections.sort(feedObjectList, Collections.reverseOrder());
 
+        logger.info("Success");
         // Return Json Response Object containing the Feed List
         return ResponseEntity.ok(feedObjectList);
     }
@@ -64,7 +64,6 @@ public class ComicFeedController {
         for (int i = 0; i < 10; i++) {
             comicAPIUrl = "https://xkcd.com/" + lastComicNum + "/info.0.json";
             WebComicAPIObject webComicAPIObject = restTemplate.getForObject(comicAPIUrl, WebComicAPIObject.class);
-//            logger.info(webComicAPIObject.toString());
 
             //Decrement Comic Number
             lastComicNum--;
@@ -96,7 +95,7 @@ public class ComicFeedController {
         try {
             URL feedSource = new URL("http://feeds.feedburner.com/PoorlyDrawnLines");
             SyndFeed feed = input.build(new XmlReader(feedSource));
-            logger.info("Success");
+
             String xml = new SyndFeedOutput().outputString(feed);
             try {
                 JSONObject json = XML.toJSONObject(xml);
